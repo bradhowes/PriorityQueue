@@ -1,5 +1,4 @@
 // Copyright © 2020 Brad Howes. All rights reserved.
-//
 
 /**
  Generic container that maintains a binary heap: all parent nodes but the last contain 2 children (last parent can
@@ -26,7 +25,7 @@ public struct PriorityQueue<T> {
      - parameter compare: function that determines ordering of items in the queue
      elements in ascending order
      */
-    public init(_ args: ElementType..., compare: @escaping IsOrderedOp) {
+    public init(compare: @escaping IsOrderedOp, _ args: ElementType...) {
         self.isOrdered = compare
         args.forEach { push($0) }
     }
@@ -48,7 +47,7 @@ public struct PriorityQueue<T> {
      */
     public mutating func push(_ item: ElementType) {
         heap.append(item)
-        _ = siftUp(index: heap.endIndex - 1)
+        _ = siftDown(start: 0, index: heap.count - 1)
     }
 
     /**
@@ -60,7 +59,7 @@ public struct PriorityQueue<T> {
         case 0: return nil
         case 1: return heap.removeLast()
         default:
-            defer { _ = siftDown(index: 0) }
+            defer { _ = siftUp(index: 0) }
             heap.swapAt(0, heap.endIndex - 1)
             return heap.removeLast()
         }
@@ -89,30 +88,39 @@ extension PriorityQueue {
 
     private func isOrdered(_ left: Int, _ right: Int) -> Bool { isOrdered(heap[left], heap[right]) }
 
-    private mutating func siftDown(index: Int, swapped: Bool = false) -> Bool {
-        var best = index
-        let left = index * 2 + 1
-        if left < heap.count && isOrdered(left, best) {
-            best = left
+    private mutating func siftUp(index: Int) {
+        var pos = index
+        let startPos = pos
+        let newItem = heap[pos]
+        var childPos = 2 * pos + 1
+        while childPos < heap.count {
+            let rightPos = childPos + 1
+            if rightPos < heap.count && !isOrdered(childPos, rightPos) {
+                childPos = rightPos
+            }
+            heap[pos] = heap[childPos]
+            pos = childPos
+            childPos = 2 * pos + 1
         }
 
-        let right = index * 2 + 2
-        if right < heap.count && isOrdered(right, best) {
-            best = right
-        }
-
-        if best == index { return swapped }
-
-        heap.swapAt(index, best)
-        return siftDown(index: best, swapped: true)
+        heap[pos] = newItem
+        siftDown(start: startPos, index: pos)
     }
 
-    private mutating func siftUp(index: Int, swapped: Bool = false) -> Bool {
-        guard index > 0 else { return swapped }
-        let parent = (index - 1) >> 1
-        if isOrdered(parent, index) { return swapped }
-        heap.swapAt(index, parent)
-        return siftUp(index: parent, swapped: true)
+    private mutating func siftDown(start: Int, index: Int) {
+        let newItem = heap[index]
+        var pos = index
+        while pos > start {
+            let parentPos = (pos - 1) >> 1
+            let parent = heap[parentPos]
+            if isOrdered(newItem, parent) {
+                heap[pos] = parent
+                pos = parentPos
+                continue
+            }
+            break
+        }
+        heap[pos] = newItem
     }
 }
 
@@ -125,39 +133,6 @@ extension PriorityQueue where ElementType: Equatable {
      - returns: true if found
      */
     public func contains(_ value: ElementType) -> Bool { heap.contains(value) }
-
-    /**
-     Update an entry in the queue, possibly reording its position.
-     - parameter element: the item to update
-     - returns: the item if it was moved or nil if item was not found or its position did not change
-     */
-    public mutating func update(element: ElementType) -> ElementType? {
-        for (index, item) in heap.enumerated() where item == element {
-            heap[index] = element
-
-            // Assume that the new entry is different than the old one. Try to rebalance upward first.
-            // If that did not induce a swap, then try and rebalance downward.
-            //
-            if !siftDown(index: index) { _ = siftUp(index: index) }
-            return item
-        }
-        return nil
-    }
-
-    /**
-     Remove an entry from the priority queue.
-     - parameter element: the entry to remove
-     - returns: the element that was removed or nil if not found
-     */
-    public mutating func remove(element: ElementType) -> ElementType? {
-        for (index, item) in heap.enumerated() where item == element {
-            heap.swapAt(index, heap.endIndex - 1)
-            heap.removeLast()
-            _ = siftDown(index: index)
-            return item
-        }
-        return nil
-    }
 }
 
 extension PriorityQueue where ElementType: Comparable {
@@ -204,5 +179,15 @@ extension PriorityQueue where ElementType: Comparable {
     public init(_ args: ElementType...) {
         isOrdered = Self.minComp
         args.forEach { push($0) }
+    }
+}
+
+extension PriorityQueue {
+
+    mutating func replace(_ value: ElementType) -> ElementType {
+        let returnItem = heap[0]
+        heap[0] = value
+        siftUp(index: 0)
+        return returnItem
     }
 }
