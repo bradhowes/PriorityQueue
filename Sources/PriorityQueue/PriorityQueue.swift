@@ -20,10 +20,9 @@ public struct PriorityQueue<T> {
     private var heap: [ElementType] = []
 
     /**
-     Intialize new instance..
+     Intialize new instance with zero or more items
+     - parameter compare: function that determines ordering of items in the queue elements in ascending order
      - parameter args: zero or more items to add to queue
-     - parameter compare: function that determines ordering of items in the queue
-     elements in ascending order
      */
     public init(compare: @escaping IsOrderedOp, _ args: ElementType...) {
         self.isOrdered = compare
@@ -31,7 +30,7 @@ public struct PriorityQueue<T> {
     }
 
     /**
-     Intialize new instance.
+     Intialize new instance with a collection of items
 
      - parameter compare: function that determines the ordering of itesm int the queue
      - parameter values: collection of items to add
@@ -47,7 +46,7 @@ public struct PriorityQueue<T> {
      */
     public mutating func push(_ item: ElementType) {
         heap.append(item)
-        _ = siftDown(start: 0, index: heap.count - 1)
+        siftDown(start: 0, index: heap.count - 1)
     }
 
     /**
@@ -59,7 +58,7 @@ public struct PriorityQueue<T> {
         case 0: return nil
         case 1: return heap.removeLast()
         default:
-            defer { _ = siftUp(index: 0) }
+            defer { siftUp(index: 0) }
             heap.swapAt(0, heap.endIndex - 1)
             return heap.removeLast()
         }
