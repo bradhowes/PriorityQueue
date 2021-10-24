@@ -133,6 +133,12 @@ extension PriorityQueue {
   }
 }
 
+private extension Int {
+  var parentPos: Int { (self - 1) >> 1 }
+  var leftChildPos: Int { (self * 2) + 1 }
+  var rightChildPos: Int { leftChildPos + 1 }
+}
+
 private extension PriorityQueue {
 
   func isOrdered(_ left: Int, _ right: Int) -> Bool { isOrdered(heap[left], heap[right]) }
@@ -140,20 +146,20 @@ private extension PriorityQueue {
   mutating func shiftUp(at index: Int) {
     var pos = index
     let child = heap[pos]
-    var parentPos = (pos - 1) >> 1
+    var parentPos = pos.parentPos
 
     while pos > 0 && isOrdered(child, heap[parentPos]) {
       heap[pos] = heap[parentPos]
       pos = parentPos
-      parentPos = (pos - 1) >> 1
+      parentPos = pos.parentPos
     }
 
     heap[pos] = child
   }
 
   mutating func shiftDown(at index: Int, until: Int) {
-    let leftPos = index * 2 + 1
-    let rightPos = leftPos + 1
+    let leftPos = index.leftChildPos
+    let rightPos = index.rightChildPos
 
     var first = index
     if leftPos < until && isOrdered(leftPos, first) { first = leftPos }
