@@ -1,0 +1,23 @@
+SCHEME = PriorityQueue
+DOCC_DIR = ./docs
+WORKSPACE = $(PWD)/$(SCHEME).workspace
+SKIPS = -skipMacroValidation -skipPackagePluginValidation
+
+test:
+	swift test --parallel
+
+docc:
+	DOCC_JSON_PRETTYPRINT="YES" \
+	swift package \
+		--allow-writing-to-directory $(DOCC_DIR) \
+		generate-documentation \
+		--target $(SCHEME) \
+		--disable-indexing \
+		--transform-for-static-hosting \
+		--hosting-base-path swift-math-parser \
+		--output-path $(DOCC_DIR)
+
+clean:
+	rm -rf "$(WORKSPACE)"
+
+.PHONY: test docc clean

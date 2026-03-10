@@ -51,8 +51,8 @@ extension PriorityQueue : CustomStringConvertible {
 public extension PriorityQueue {
 
   /**
-   Add a new item to the queue while maintaining binary heap property.
-   - parameter item: the new item to add
+   Add one or more items to the queue while maintaining binary heap property.
+   - parameter items: the variable number of items to add
    */
   mutating func push(_ items: ElementType...) {
     for item in items {
@@ -61,6 +61,10 @@ public extension PriorityQueue {
     }
   }
 
+  /**
+   Add a collection of items to the queue while maintaining binary heap property.
+   - parameter items: the collection to add
+   */
   mutating func push(items: [ElementType]) {
     for item in items {
       heap.append(item)
