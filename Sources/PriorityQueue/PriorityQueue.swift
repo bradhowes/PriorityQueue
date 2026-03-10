@@ -1,14 +1,17 @@
-// Copyright © 2020 Brad Howes. All rights reserved.
+// Copyright © 2020-2026 Brad Howes. All rights reserved.
 
 /**
  Generic container that maintains a binary heap: all parent nodes but the last contain 2 children (last parent can
  contain 1 child). Each parent appears in the container before its children, ordered by a provided function.
+
+ Note: Apple's swift-collections package contains a min-max heap implementation that may be better to use. I have not
+ measured performance of this implementation with theirs.
  */
 public struct PriorityQueue<T> {
   public typealias ElementType = T
 
   /// Defines a function type that returns true if the two arguments are considered in order.
-  public typealias IsOrderedOp = (ElementType, ElementType) -> Bool
+  public typealias OrderingOp = (ElementType, ElementType) -> Bool
   /// Obtain the number of items currently in the queue
   public var count: Int { heap.count }
   /// Determine if the container is empty
@@ -16,15 +19,15 @@ public struct PriorityQueue<T> {
   /// Return the first item in the queue if there is one. Does not remove it from the queue.
   public var first: ElementType? { heap.first }
 
-  private let isOrdered: IsOrderedOp
-  private var heap: [ElementType] = []
+  private let isOrdered: OrderingOp
+  private var heap: ContiguousArray<ElementType> = .init()
 
   /**
    Initialize new instance with zero or more items
    - parameter compare: function that determines ordering of items in the queue elements in ascending order
    - parameter args: zero or more items to add to queue
    */
-  public init(compare: @escaping IsOrderedOp, _ args: ElementType...) {
+  public init(compare: @escaping OrderingOp, _ args: ElementType...) {
     self.isOrdered = compare
     args.forEach { push($0) }
   }
@@ -35,7 +38,7 @@ public struct PriorityQueue<T> {
    - parameter compare: function that determines the ordering of itesm int the queue
    - parameter values: collection of items to add
    */
-  public init(_ compare: @escaping IsOrderedOp, values: [ElementType]) {
+  public init(_ compare: @escaping OrderingOp, values: [ElementType]) {
     self.isOrdered = compare
     values.forEach { push($0) }
   }
@@ -51,9 +54,18 @@ public extension PriorityQueue {
    Add a new item to the queue while maintaining binary heap property.
    - parameter item: the new item to add
    */
-  mutating func push(_ item: ElementType) {
-    heap.append(item)
-    shiftUp(at: heap.count - 1)
+  mutating func push(_ items: ElementType...) {
+    for item in items {
+      heap.append(item)
+      siftUp(at: heap.count - 1)
+    }
+  }
+
+  mutating func push(items: [ElementType]) {
+    for item in items {
+      heap.append(item)
+      siftUp(at: heap.count - 1)
+    }
   }
 
   /**
@@ -67,7 +79,7 @@ public extension PriorityQueue {
     default:
       let value = heap[0]
       heap[0] = heap.removeLast()
-      shiftDown(at: 0, until: heap.count)
+      siftDown(at: 0, until: heap.count)
       return value
     }
   }
@@ -84,8 +96,8 @@ public extension PriorityQueue {
     let last = heap.count - 1
     if index != last {
       heap.swapAt(index, last)
-      shiftDown(at: index, until: last)
-      shiftUp(at: index)
+      siftDown(at: index, until: last)
+      siftUp(at: index)
     }
 
     return heap.removeLast()
@@ -131,19 +143,34 @@ extension PriorityQueue {
       block(element)
     }
   }
+
+  /**
+   Obtain all of the elements from the container in ordered fashion.
+
+   - returns: array of elements
+   */
+  public mutating func popAll() -> [ElementType] {
+    var items: [ElementType] = []
+    while let element = pop() {
+      items.append(element)
+    }
+    return items
+  }
 }
 
 private extension Int {
+
+  /// The index of the parent for this index
   var parentPos: Int { (self - 1) >> 1 }
+  /// The index of the first (left) child of this index
   var leftChildPos: Int { (self * 2) + 1 }
+  /// The index of the second (right) child of this index
   var rightChildPos: Int { leftChildPos + 1 }
 }
 
 private extension PriorityQueue {
 
-  func isOrdered(_ left: Int, _ right: Int) -> Bool { isOrdered(heap[left], heap[right]) }
-
-  mutating func shiftUp(at index: Int) {
+  mutating func siftUp(at index: Int) {
     var pos = index
     let child = heap[pos]
     var parentPos = pos.parentPos
@@ -157,17 +184,17 @@ private extension PriorityQueue {
     heap[pos] = child
   }
 
-  mutating func shiftDown(at index: Int, until: Int) {
+  mutating func siftDown(at index: Int, until: Int) {
     let leftPos = index.leftChildPos
     let rightPos = index.rightChildPos
 
     var first = index
-    if leftPos < until && isOrdered(leftPos, first) { first = leftPos }
-    if rightPos < until && isOrdered(rightPos, first) { first = rightPos }
+    if leftPos < until && isOrdered(heap[leftPos], heap[first]) { first = leftPos }
+    if rightPos < until && isOrdered(heap[rightPos], heap[first]) { first = rightPos }
     if first == index { return }
 
     heap.swapAt(index, first)
-    shiftDown(at: first, until: until)
+    siftDown(at: first, until: until)
   }
 }
 
@@ -185,30 +212,12 @@ extension PriorityQueue where ElementType: Equatable {
 extension PriorityQueue where ElementType: Comparable {
 
   /**
-   Generic comparison function for Comparable types that provides for max value ordering
-
-   - parameter lhs: first value to compare
-   - parameter rhs: second value to compare
-   - returns: true if first value >= second value
-   */
-  public static func maxComp(_ lhs: ElementType, _ rhs: ElementType) -> Bool { lhs >= rhs }
-
-  /**
-   Generic comparison function for Comparable types that provides for min value ordering
-
-   - parameter lhs: first value to compare
-   - parameter rhs: second value to compare
-   - returns: true if first value <= second value
-   */
-  public static func minComp(_ lhs: ElementType, _ rhs: ElementType) -> Bool { lhs <= rhs }
-
-  /**
    Factory method for creating a PriorityQueue with max-value ordering
 
    - parameter args: values to add to the queue
    - returns: the new PriorityQueue instance
    */
-  static public func maxOrdering(_ args: ElementType...) -> PriorityQueue { PriorityQueue(maxComp, values: args) }
+  static public func maxOrdering(_ args: ElementType...) -> PriorityQueue { PriorityQueue(>, values: args) }
 
   /**
    Factory method for creating a PriorityQueue with min-value ordering
@@ -216,7 +225,7 @@ extension PriorityQueue where ElementType: Comparable {
    - parameter args: values to add to the queue
    - returns: the new PriorityQueue instance
    */
-  static public func minOrdering(_ args: ElementType...) -> PriorityQueue { PriorityQueue(minComp, values: args) }
+  static public func minOrdering(_ args: ElementType...) -> PriorityQueue { PriorityQueue(<, values: args) }
 
   /**
    Convenience constructor for a PriorityQueue with min-value ordering.
@@ -224,7 +233,6 @@ extension PriorityQueue where ElementType: Comparable {
    - parameter args: initial values to add to the queue
    */
   public init(_ args: ElementType...) {
-    isOrdered = Self.minComp
-    args.forEach { push($0) }
+    self.init(<, values: args)
   }
 }
