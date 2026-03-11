@@ -72,7 +72,7 @@ public struct PriorityQueue<T> {
   }
 }
 
-extension PriorityQueue : CustomStringConvertible {
+extension PriorityQueue: CustomStringConvertible {
 
   /// A textual representation of the queue and its elements.
   @inlinable
@@ -126,7 +126,7 @@ extension PriorityQueue {
    - returns: the item that was at the given position.
    */
   public mutating func remove(at index: Int) -> ElementType? {
-    guard index < heap.count else { return nil }
+    guard index >= 0 && index < heap.count else { return nil }
     let last = heap.count - 1
     if index != last {
       heap.swapAt(index, last)
@@ -151,7 +151,7 @@ extension PriorityQueue {
    */
   @inlinable
   public mutating func replace(at index: Int, with value: T) -> ElementType? {
-    guard index < heap.count else { return nil }
+    guard index >= 0 && index < heap.count else { return nil }
     defer { push(value) }
     return remove(at: index)
   }

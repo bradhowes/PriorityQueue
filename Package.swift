@@ -4,16 +4,24 @@ import PackageDescription
 
 let package = Package(
   name: "PriorityQueue",
+  platforms: [
+    .iOS(.v14),
+    .macOS(.v12),
+    .tvOS(.v13),
+    .watchOS(.v6),
+  ],
   products: [
     .library(name: "PriorityQueue", targets: ["PriorityQueue"])
   ],
   dependencies: [
-    .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0")
+    .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
+    .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.63.2")
   ],
   targets: [
     .target(
       name: "PriorityQueue",
-      dependencies: []
+      dependencies: [],
+      plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
     ),
     .testTarget(
       name: "PriorityQueueTests",
