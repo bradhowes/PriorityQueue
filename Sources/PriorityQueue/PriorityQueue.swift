@@ -5,27 +5,55 @@
  contain 1 child). Each parent appears in the container before its children, ordered by a provided function.
 
  Note: Apple's swift-collections package contains a min-max heap implementation that may be better to use. I have not
- measured performance of this implementation with theirs.
+ measured and compared performance of either.
+
+ Note: the queue does not conform to `Sequence`, nor to `IteratorProtocol`. There is however a `forEach` method that one can use
+ to repeatedly obtain the "top" element in the queue until it is empty:
+
+ ```
+ var heap: PriorityQueue<Int> = .init(1, 9, 3, 5)
+ var tops: [Int] = []
+ heap.forEach {
+   tops.append($0)
+ }
+ ```
+
+ Similarly, there is a `popAll` method that does the same as the above and returns an array of the ordered elements from the queue:
+
+ ```
+ var heap: PriorityQueue<Int> = .init(1, 9, 3, 5)
+ let tops = heap.popAll() # -> [1, 3, 5, 9]
+ ```
  */
 public struct PriorityQueue<T> {
   public typealias ElementType = T
+  public typealias Index = ContiguousArray<ElementType>.Index
 
   /// Defines a function type that returns true if the two arguments are considered in order.
   public typealias OrderingOp = (ElementType, ElementType) -> Bool
-  /// Obtain the number of items currently in the queue
+
+  /// The number of elements in the queue.
+  @inlinable
   public var count: Int { heap.count }
-  /// Determine if the container is empty
+
+  /// A Boolean value indicating whether the queue is empty.
+  @inlinable
   public var isEmpty: Bool { heap.isEmpty }
-  /// Return the first item in the queue if there is one. Does not remove it from the queue.
+
+  /// The first item in the queue, ordered by priority.
+  @inlinable
   public var first: ElementType? { heap.first }
 
-  private let isOrdered: OrderingOp
-  private var heap: ContiguousArray<ElementType> = .init()
+  @usableFromInline
+  internal let isOrdered: OrderingOp
+
+  @usableFromInline
+  internal var heap: ContiguousArray<ElementType> = .init()
 
   /**
    Initialize new instance with zero or more items
-   - parameter compare: function that determines ordering of items in the queue elements in ascending order
-   - parameter args: zero or more items to add to queue
+   - parameter compare: function that determines ordering of items in the queue elements in ascending order.
+   - parameter args: zero or more items to add to queue.
    */
   public init(compare: @escaping OrderingOp, _ args: ElementType...) {
     self.isOrdered = compare
@@ -35,48 +63,50 @@ public struct PriorityQueue<T> {
   /**
    Initialize new instance with a collection of items
 
-   - parameter compare: function that determines the ordering of itesm int the queue
-   - parameter values: collection of items to add
+   - parameter compare: function that determines the ordering of itesm int the queue.
+   - parameter values: collection of items to add.
    */
-  public init(_ compare: @escaping OrderingOp, values: [ElementType]) {
+  public init(compare: @escaping OrderingOp, values: [ElementType]) {
     self.isOrdered = compare
     values.forEach { push($0) }
   }
 }
 
 extension PriorityQueue : CustomStringConvertible {
+
+  /// A textual representation of the queue and its elements.
+  @inlinable
   public var description: String { heap.description }
 }
 
-public extension PriorityQueue {
+extension PriorityQueue {
 
   /**
-   Add one or more items to the queue while maintaining binary heap property.
-   - parameter items: the variable number of items to add
+   Add one or more items to the queue while maintaining the binary heap property.
+   - parameter items: the variable number of items to add.
    */
-  mutating func push(_ items: ElementType...) {
-    for item in items {
-      heap.append(item)
+  @inlinable
+  public mutating func push(_ items: ElementType...) {
+    push(items: items)
+  }
+
+  /**
+   Add a collection of items to the queue while maintaining the binary heap property.
+   - parameter items: the collection to add.
+   */
+  @inlinable
+  public mutating func push(items: [ElementType]) {
+    items.forEach {
+      heap.append($0)
       siftUp(at: heap.count - 1)
     }
   }
 
   /**
-   Add a collection of items to the queue while maintaining binary heap property.
-   - parameter items: the collection to add
+   Removes and returns the first element in the queue.
+   - returns: the first element in the queue.
    */
-  mutating func push(items: [ElementType]) {
-    for item in items {
-      heap.append(item)
-      siftUp(at: heap.count - 1)
-    }
-  }
-
-  /**
-   Remove the first item from the queue and return it.
-   - returns: first item or nil if queue is empty
-   */
-  mutating func pop() -> ElementType? {
+  public mutating func pop() -> ElementType? {
     switch count {
     case 0: return nil
     case 1: return heap.removeLast()
@@ -89,14 +119,14 @@ public extension PriorityQueue {
   }
 
   /**
-   Remove the item at the given index.
+   Remove the item at the given index. This involves both a sift down of the new value at `index` as well as a sift up in order to
+   guarantee heap constraints -- not an optimal operation.
 
-   - parameter index: the position to remove
-   - returns: the item that was at the given position
+   - parameter index: the position to remove.
+   - returns: the item that was at the given position.
    */
-  mutating func remove(at index: Int) -> ElementType? {
+  public mutating func remove(at index: Int) -> ElementType? {
     guard index < heap.count else { return nil }
-
     let last = heap.count - 1
     if index != last {
       heap.swapAt(index, last)
@@ -107,17 +137,20 @@ public extension PriorityQueue {
     return heap.removeLast()
   }
 
-  /// Remove all entries from the queue
-  mutating func removeAll() { heap.removeAll() }
+  /// Remove all entries from the queue.
+  @inlinable
+  public mutating func removeAll() { heap.removeAll() }
 
   /**
-   Replace a value at a given position with a new one.
+   Replace a value at a given position with a new one. This involves removing the value at the given index and then pushing the new
+   value onto heap -- not an optimal operation.
 
-   - parameter index: the index of the item to replace
-   - parameter value: the new value to store
-   - returns: the previous item at the given index
+   - parameter index: the index of the item to replace.
+   - parameter value: the new value to store.
+   - returns: the previous item at the given index.
    */
-  mutating func replace(at index: Int, with value: T) -> ElementType? {
+  @inlinable
+  public mutating func replace(at index: Int, with value: T) -> ElementType? {
     guard index < heap.count else { return nil }
     defer { push(value) }
     return remove(at: index)
@@ -126,33 +159,34 @@ public extension PriorityQueue {
   /**
    Replace the root with a new value.
 
-   - parameter value: new value to use
-   - returns: old root value
+   - parameter value: new value to use.
+   - returns: old root value.
    */
-  mutating func replace(_ value: ElementType) -> ElementType? {
-    return replace(at: 0, with: value)
+  @inlinable
+  public mutating func replace(_ value: ElementType) -> ElementType? {
+    replace(at: 0, with: value)
   }
 }
 
 extension PriorityQueue {
 
-  public typealias ForEachBlockType = (ElementType) -> Void
-
   /**
    Allow destructive iteration over the queue, handing the next ordered element the queue to the given closure.
-   - parameter block: the closure to call to process the element
+   - parameter block: the closure to call to process the element.
    */
-  public mutating func forEach(block: ForEachBlockType) {
+  @inlinable
+  public mutating func forEach(block: (ElementType) -> Void) {
     while let element = pop() {
       block(element)
     }
   }
 
   /**
-   Obtain all of the elements from the container in ordered fashion.
+   Obtain all of the elements from the container in ordered fashion, resulting in an empty queue.
 
-   - returns: array of elements
+   - returns: array of elements from the queue.
    */
+  @inlinable
   public mutating func popAll() -> [ElementType] {
     var items: [ElementType] = []
     while let element = pop() {
@@ -162,43 +196,67 @@ extension PriorityQueue {
   }
 }
 
-private extension Int {
+/// Attributes for moving to parent and children. Uses Swift `FixedWidthInteger` operations for speed.
+extension PriorityQueue<Any>.Index {
 
-  /// The index of the parent for this index
-  var parentPos: Int { (self - 1) >> 1 }
-  /// The index of the first (left) child of this index
-  var leftChildPos: Int { (self * 2) + 1 }
-  /// The index of the second (right) child of this index
-  var rightChildPos: Int { leftChildPos + 1 }
+  /// The index of the parent.
+  @inlinable
+  var parentPos: Self { (self &- 1) >> 1 }
+
+  /// The index of the first (left) child.
+  @inlinable
+  var leftChildPos: Self { (self &* 2) &+ 1 }
+
+  /// The index of the second (right) child.
+  @inlinable
+  var rightChildPos: Self { leftChildPos &+ 1 }
 }
 
-private extension PriorityQueue {
+extension PriorityQueue {
 
-  mutating func siftUp(at index: Int) {
-    var pos = index
-    let child = heap[pos]
-    var parentPos = pos.parentPos
+  /**
+   Move an item higher in the queue while it is unordered compared to its parent.
 
-    while pos > 0 && isOrdered(child, heap[parentPos]) {
-      heap[pos] = heap[parentPos]
-      pos = parentPos
-      parentPos = pos.parentPos
+   - parameter index: the index of the item to compare.
+   */
+  @inlinable
+  mutating func siftUp(at index: Index) {
+    heap.withUnsafeMutableBufferPointer { ptr in
+      var pos = index
+      let child = ptr[pos]
+      var parentPos = pos.parentPos
+
+      while pos > 0 && isOrdered(child, ptr[parentPos]) {
+        ptr[pos] = ptr[parentPos]
+        pos = parentPos
+        parentPos = pos.parentPos
+      }
+      ptr[pos] = child
     }
-
-    heap[pos] = child
   }
 
-  mutating func siftDown(at index: Int, until: Int) {
-    let leftPos = index.leftChildPos
-    let rightPos = index.rightChildPos
+  /**
+   Move an item down in the queue while it is unordered compared to its children.
 
-    var first = index
-    if leftPos < until && isOrdered(heap[leftPos], heap[first]) { first = leftPos }
-    if rightPos < until && isOrdered(heap[rightPos], heap[first]) { first = rightPos }
-    if first == index { return }
-
-    heap.swapAt(index, first)
-    siftDown(at: first, until: until)
+   - parameter index: the index of the item to compare.
+   - parameter until: the index at which to stop the comparisons.
+   */
+  @inlinable
+  mutating func siftDown(at index: Index, until: Index) {
+    heap.withUnsafeMutableBufferPointer { ptr in
+      var index = index
+      while true {
+        var newPos = index
+        for childPos in [index.leftChildPos, index.rightChildPos] {
+          if childPos < until && isOrdered(ptr[childPos], ptr[newPos]) {
+            newPos = childPos
+          }
+        }
+        if newPos == index { break }
+        ptr.swapAt(index, newPos)
+        index = newPos
+      }
+    }
   }
 }
 
@@ -207,36 +265,40 @@ extension PriorityQueue where ElementType: Equatable {
   /**
    Determine if container holds the given value.
 
-   - parameter value: the value to look for
-   - returns: true if found
+   - parameter value: the value to look for.
+   - returns: true if found.
    */
+  @inlinable
   public func contains(_ value: ElementType) -> Bool { heap.contains(value) }
 }
 
 extension PriorityQueue where ElementType: Comparable {
 
   /**
-   Factory method for creating a PriorityQueue with max-value ordering
+   Factory method for creating a PriorityQueue with max-value ordering.
 
-   - parameter args: values to add to the queue
-   - returns: the new PriorityQueue instance
+   - parameter args: values to add to the queue.
+   - returns: the new PriorityQueue instance.
    */
-  static public func maxOrdering(_ args: ElementType...) -> PriorityQueue { PriorityQueue(>, values: args) }
+  @inlinable
+  static public func maxOrdering(_ args: ElementType...) -> PriorityQueue { PriorityQueue(compare: >, values: args) }
 
   /**
-   Factory method for creating a PriorityQueue with min-value ordering
+   Factory method for creating a PriorityQueue with min-value ordering.
 
-   - parameter args: values to add to the queue
-   - returns: the new PriorityQueue instance
+   - parameter args: values to add to the queue.
+   - returns: the new PriorityQueue instance.
    */
-  static public func minOrdering(_ args: ElementType...) -> PriorityQueue { PriorityQueue(<, values: args) }
+  @inlinable
+  static public func minOrdering(_ args: ElementType...) -> PriorityQueue { PriorityQueue(compare: <, values: args) }
 
   /**
    Convenience constructor for a PriorityQueue with min-value ordering.
 
-   - parameter args: initial values to add to the queue
+   - parameter args: initial values to add to the queue.
    */
+  @inlinable
   public init(_ args: ElementType...) {
-    self.init(<, values: args)
+    self.init(compare: <, values: args)
   }
 }

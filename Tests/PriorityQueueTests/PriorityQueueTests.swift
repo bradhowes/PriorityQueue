@@ -94,7 +94,7 @@ struct PriorityQueueTests {
 
   @Test
   func replaceMinOrder() {
-    var queue = PriorityQueue.minOrdering(1, 3, 5, 7, 9)
+    var queue = PriorityQueue.minOrdering(3, 1, 9, 7, 5)
     #expect(queue.count == 5)
     #expect(queue.pop() == 1)
     #expect(queue.pop() == 3)
@@ -107,7 +107,7 @@ struct PriorityQueueTests {
 
   @Test
   func replaceMaxOrder() {
-    var queue = PriorityQueue.maxOrdering(1, 3, 5, 7, 9)
+    var queue = PriorityQueue.maxOrdering(3, 1, 5, 9, 7)
     #expect(queue.count == 5)
     #expect(queue.pop() == 9)
     #expect(queue.pop() == 7)
