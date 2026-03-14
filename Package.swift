@@ -14,14 +14,12 @@ let package = Package(
     .library(name: "PriorityQueue", targets: ["PriorityQueue"])
   ],
   dependencies: [
-    .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
-    .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.63.2")
+    .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0")
   ],
   targets: [
     .target(
       name: "PriorityQueue",
-      dependencies: [],
-      plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+      dependencies: []
     ),
     .testTarget(
       name: "PriorityQueueTests",
