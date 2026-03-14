@@ -3,8 +3,8 @@
 /**
  Generic container that maintains a binary heap for fast access to a min or max element in the container.
 
- In a heap, all parent nodes but the last contain 2 children (last parent can contain 1 child).
- Each parent appears in the container before its children. Ordering is determined by a function given during
+ In a heap, elements are ordered sequentially, with parents appearing before their children. All parents but the last
+ have 2 children (the last parent may contain 1 child). Ordering is determined by a function given during
  initialization.
 
 > Note: Apple's swift-collections package contains a min-max heap implementation that may be better to use. I have not
@@ -16,13 +16,14 @@
  var heap: PriorityQueue<Int> = .init(ordering: \<)
  ```
 
- Since `Int` conforms to the `Orderable` protocol, one can omit the `ordering:` argument:
+ Since `Int` conforms to the `Orderable` protocol, one can omit the `ordering:` argument if a min-heap is desired:
 
  ```
  var heap: PriorityQueue<Int> = .init()
  ```
 
- To add values to a heap, call the `push` method. This supports a variable number of values or even a sequence of values:
+ To add values to a heap, call the ``PriorityQueue/push(_:)`` method. This method supports a variable number of values
+ (there is the ``PriorityQueue/push(items:)`` variant for a sequence):
 
  ```
  heap.push(5)
@@ -30,18 +31,19 @@
  heap.push(items: [5,6,7])
  ```
 
- The usual way to fetch items from queue is by using the `pop` method:
+ The usual way to fetch items from queue is by using the ``PriorityQueue/pop()`` method:
 
  ```
  let value = heap.pop()
  ```
 
- It is acceptable to call this even if the queue is empty -- the return value will be `nil` in such a case.
+ It is acceptable to call this even if the queue is empty -- the return value will be `nil` when that is the case.
 
  ### Not a Sequence
 
- The queue does not conform to `Sequence`, nor to `IteratorProtocol`. There is however a `forEach` method that one can use
- to repeatedly obtain the "top" element in the queue until it is empty:
+ Note that the queue does not conform to `Sequence`, nor to `IteratorProtocol`. There is however a
+ ``PriorityQueue/forEach(block:)`` method that one can use to repeatedly obtain the "top" element in the queue until it
+ is empty:
 
  ```
  var heap: PriorityQueue<Int> = .init(1, 9, 3, 5)
@@ -51,7 +53,7 @@
  }
  ```
 
- Similarly, there is a `popAll` method that does the same as the above and returns an array of the ordered elements from the queue:
+ Similarly, there is a ``PriorityQueue/popAll()`` method that returns an array of the ordered elements from the queue:
 
  ```
  var heap: PriorityQueue<Int> = .init(1, 9, 3, 5)

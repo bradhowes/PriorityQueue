@@ -12,9 +12,7 @@ docc:
 		--allow-writing-to-directory $(DOCC_DIR) \
 		generate-documentation \
 		--target $(SCHEME) \
-		--disable-indexing \
 		--transform-for-static-hosting \
-		--hosting-base-path swift-math-parser \
 		--output-path $(DOCC_DIR)
 
 clean:
