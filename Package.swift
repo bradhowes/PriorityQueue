@@ -1,4 +1,4 @@
-// swift-tools-version: 6.1
+// swift-tools-version: 6.0
 
 import PackageDescription
 
@@ -25,5 +25,6 @@ let package = Package(
       name: "PriorityQueueTests",
       dependencies: ["PriorityQueue"]
     ),
-  ]
+  ],
+  swiftLanguageModes: [.v6, .v5]
 )
