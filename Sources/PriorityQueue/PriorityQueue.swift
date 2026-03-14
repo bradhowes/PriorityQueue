@@ -1,13 +1,46 @@
 // Copyright © 2020-2026 Brad Howes. All rights reserved.
 
 /**
- Generic container that maintains a binary heap: all parent nodes but the last contain 2 children (last parent can
- contain 1 child). Each parent appears in the container before its children, ordered by a provided function.
+ Generic container that maintains a binary heap for fast access to a min or max element in the container.
 
- Note: Apple's swift-collections package contains a min-max heap implementation that may be better to use. I have not
- measured and compared performance of either.
+ In a heap, all parent nodes but the last contain 2 children (last parent can contain 1 child).
+ Each parent appears in the container before its children. Ordering is determined by a function given during
+ initialization.
 
- Note: the queue does not conform to `Sequence`, nor to `IteratorProtocol`. There is however a `forEach` method that one can use
+> Note: Apple's swift-collections package contains a min-max heap implementation that may be better to use. I have not
+> measured and compared performance of either.
+
+ Creating a new heap is straightforward:
+
+ ```
+ var heap: PriorityQueue<Int> = .init(ordering: \<)
+ ```
+
+ Since `Int` conforms to the `Orderable` protocol, one can omit the `ordering:` argument:
+
+ ```
+ var heap: PriorityQueue<Int> = .init()
+ ```
+
+ To add values to a heap, call the `push` method. This supports a variable number of values or even a sequence of values:
+
+ ```
+ heap.push(5)
+ heap.push(5, 6, 7)
+ heap.push(items: [5,6,7])
+ ```
+
+ The usual way to fetch items from queue is by using the `pop` method:
+
+ ```
+ let value = heap.pop()
+ ```
+
+ It is acceptable to call this even if the queue is empty -- the return value will be `nil` in such a case.
+
+ ### Not a Sequence
+
+ The queue does not conform to `Sequence`, nor to `IteratorProtocol`. There is however a `forEach` method that one can use
  to repeatedly obtain the "top" element in the queue until it is empty:
 
  ```
@@ -26,9 +59,11 @@
  ```
  */
 public struct PriorityQueue<T> {
-  public typealias ElementType = T
-  public typealias Index = ContiguousArray<ElementType>.Index
 
+  /// The type of the element held in the queue.
+  public typealias ElementType = T
+  /// The index type for the container.
+  public typealias Index = ContiguousArray<ElementType>.Index
   /// Defines a function type that returns true if the two arguments are considered in order.
   public typealias OrderingOp = (ElementType, ElementType) -> Bool
 
@@ -51,7 +86,7 @@ public struct PriorityQueue<T> {
   internal var heap: ContiguousArray<ElementType> = .init()
 
   /**
-   Initialize new instance with zero or more items
+   Initialize new instance with zero or more items.
    - parameter compare: function that determines ordering of items in the queue elements in ascending order.
    - parameter args: zero or more items to add to queue.
    */
@@ -61,7 +96,7 @@ public struct PriorityQueue<T> {
   }
 
   /**
-   Initialize new instance with a collection of items
+   Initialize new instance with a collection of items.
 
    - parameter compare: function that determines the ordering of itesm int the queue.
    - parameter values: collection of items to add.
@@ -83,6 +118,7 @@ extension PriorityQueue {
 
   /**
    Add one or more items to the queue while maintaining the binary heap property.
+
    - parameter items: the variable number of items to add.
    */
   @inlinable
@@ -92,6 +128,7 @@ extension PriorityQueue {
 
   /**
    Add a collection of items to the queue while maintaining the binary heap property.
+
    - parameter items: the collection to add.
    */
   @inlinable
@@ -104,7 +141,9 @@ extension PriorityQueue {
 
   /**
    Removes and returns the first element in the queue.
-   - returns: the first element in the queue.
+
+   - returns: the first element in the queue which is either the smallest or largest according to the ordering operation being used.
+   If the queue is empty, returns `nil`.
    */
   public mutating func pop() -> ElementType? {
     switch count {
@@ -215,7 +254,7 @@ extension PriorityQueue<Any>.Index {
 extension PriorityQueue {
 
   /**
-   Move an item higher in the queue while it is unordered compared to its parent.
+   Move an item "higher" (closer to the start) in the queue while it is unordered compared to its parent.
 
    - parameter index: the index of the item to compare.
    */
@@ -236,7 +275,7 @@ extension PriorityQueue {
   }
 
   /**
-   Move an item down in the queue while it is unordered compared to its children.
+   Move an item down (closer to the end) in the queue while it is unordered compared to its children.
 
    - parameter index: the index of the item to compare.
    - parameter until: the index at which to stop the comparisons.
@@ -263,7 +302,7 @@ extension PriorityQueue {
 extension PriorityQueue where ElementType: Equatable {
 
   /**
-   Determine if container holds the given value.
+   Determine if container holds the given value. Note that this is not optimized -- it runs in O(n).
 
    - parameter value: the value to look for.
    - returns: true if found.
