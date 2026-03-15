@@ -1,0 +1,228 @@
+{
+  "abstract" : [
+    {
+      "text" : "The index type for the container.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/PriorityQueue\/documentation\/PriorityQueue",
+        "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue\/Index"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:13PriorityQueueAAV5Indexa",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "typealias"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "Index"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "PriorityQueue"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "Index"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Type Alias",
+    "symbolKind" : "typealias",
+    "title" : "PriorityQueue.Index"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "typealias"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "Index"
+            },
+            {
+              "kind" : "text",
+              "text" : " = "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s15ContiguousArrayV",
+              "text" : "ContiguousArray"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:13PriorityQueueAAV",
+              "text" : "PriorityQueue"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "T"
+            },
+            {
+              "kind" : "text",
+              "text" : ">."
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "ElementType"
+            },
+            {
+              "kind" : "text",
+              "text" : ">."
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s15ContiguousArrayV5Indexa",
+              "text" : "Index"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/priorityqueue\/priorityqueue\/index"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://PriorityQueue/documentation/PriorityQueue": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "PriorityQueue",
+  "type" : "topic",
+  "url" : "\/documentation\/priorityqueue"
+},
+"doc://PriorityQueue/documentation/PriorityQueue/PriorityQueue": {
+  "abstract" : [
+    {
+      "text" : "Generic container that maintains a binary heap for fast access to a min or max element in the container.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PriorityQueue"
+    }
+  ],
+  "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PriorityQueue"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PriorityQueue",
+  "type" : "topic",
+  "url" : "\/documentation\/priorityqueue\/priorityqueue"
+},
+"doc://PriorityQueue/documentation/PriorityQueue/PriorityQueue/Index": {
+  "abstract" : [
+    {
+      "text" : "The index type for the container.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Index"
+    }
+  ],
+  "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue\/Index",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Index"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PriorityQueue.Index",
+  "type" : "topic",
+  "url" : "\/documentation\/priorityqueue\/priorityqueue\/index"
+}
+}
+}

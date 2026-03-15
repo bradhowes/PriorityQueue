@@ -16,22 +16,24 @@
  var heap: PriorityQueue<Int> = .init(ordering: \<)
  ```
 
- Since `Int` conforms to the `Orderable` protocol, one can omit the `ordering:` argument if a min-heap is desired:
+ Since `Int` conforms to the `Orderable` protocol, one can omit the `ordering:` argument if a min-heap of integers is desired:
 
  ```
  var heap: PriorityQueue<Int> = .init()
  ```
 
+ For a max heap, one must provide `\>` operator or use the ``PriorityQueue/maxOrdering(_:)`` factory function.
+
  To add values to a heap, call the ``PriorityQueue/push(_:)`` method. This method supports a variable number of values
  (there is the ``PriorityQueue/push(items:)`` variant for a sequence):
 
  ```
- heap.push(5)
- heap.push(5, 6, 7)
- heap.push(items: [5,6,7])
+ heap.push(6, 5, 7)
+ heap.push(items: [8, 3, 4])
+ heap.popAll() # -> [3, 4, 5, 6, 7, 8]
  ```
 
- The usual way to fetch items from queue is by using the ``PriorityQueue/pop()`` method:
+ To fetch the min/max item from the queue, use the ``PriorityQueue/pop()`` method:
 
  ```
  let value = heap.pop()
@@ -39,6 +41,9 @@
 
  It is acceptable to call this even if the queue is empty -- the return value will be `nil` when that is the case.
 
+ There is also a non-destructive ``PriorityQueue/first`` attribute which returns the min/max item in the queue (or `nil` if queue
+ is empty).
+ 
  ### Not a Sequence
 
  Note that the queue does not conform to `Sequence`, nor to `IteratorProtocol`. There is however a
@@ -56,9 +61,11 @@
  Similarly, there is a ``PriorityQueue/popAll()`` method that returns an array of the ordered elements from the queue:
 
  ```
- var heap: PriorityQueue<Int> = .init(1, 9, 3, 5)
- let tops = heap.popAll() # -> [1, 3, 5, 9]
+ var heap: PriorityQueue<Int> = .init(1, 7, 3, 5)
+ let tops = heap.popAll() # -> [1, 3, 5, 7]
  ```
+
+ Both of these are destructive operations, leaving the queue empty.
  */
 public struct PriorityQueue<T> {
 
@@ -89,8 +96,9 @@ public struct PriorityQueue<T> {
 
   /**
    Initialize new instance with zero or more items.
-   - parameter compare: function that determines ordering of items in the queue elements in ascending order.
-   - parameter args: zero or more items to add to queue.
+
+   - Parameter compare: function that determines the ordering of items in the queue.
+   - Parameter args: zero or more items to add to queue.
    */
   public init(compare: @escaping OrderingOp, _ args: ElementType...) {
     self.isOrdered = compare
@@ -100,8 +108,8 @@ public struct PriorityQueue<T> {
   /**
    Initialize new instance with a collection of items.
 
-   - parameter compare: function that determines the ordering of itesm int the queue.
-   - parameter values: collection of items to add.
+   - Parameter compare: function that determines the ordering of items in the queue.
+   - Parameter values: collection of items to add.
    */
   public init(compare: @escaping OrderingOp, values: [ElementType]) {
     self.isOrdered = compare
@@ -109,19 +117,12 @@ public struct PriorityQueue<T> {
   }
 }
 
-extension PriorityQueue: CustomStringConvertible {
-
-  /// A textual representation of the queue and its elements.
-  @inlinable
-  public var description: String { heap.description }
-}
-
 extension PriorityQueue {
 
   /**
    Add one or more items to the queue while maintaining the binary heap property.
 
-   - parameter items: the variable number of items to add.
+   - Parameter items: the variable number of items to add.
    */
   @inlinable
   public mutating func push(_ items: ElementType...) {
@@ -131,7 +132,7 @@ extension PriorityQueue {
   /**
    Add a collection of items to the queue while maintaining the binary heap property.
 
-   - parameter items: the collection to add.
+   - Parameter items: the collection to add.
    */
   @inlinable
   public mutating func push(items: [ElementType]) {
@@ -144,7 +145,7 @@ extension PriorityQueue {
   /**
    Removes and returns the first element in the queue.
 
-   - returns: the first element in the queue which is either the smallest or largest according to the ordering operation being used.
+   - Returns: the first element in the queue which is either the smallest or largest according to the ordering operation being used.
    If the queue is empty, returns `nil`.
    */
   public mutating func pop() -> ElementType? {
@@ -163,8 +164,8 @@ extension PriorityQueue {
    Remove the item at the given index. This involves both a sift down of the new value at `index` as well as a sift up in order to
    guarantee heap constraints -- not an optimal operation.
 
-   - parameter index: the position to remove.
-   - returns: the item that was at the given position.
+   - Parameter index: the position to remove.
+   - Returns: the item that was at the given position.
    */
   public mutating func remove(at index: Int) -> ElementType? {
     guard index >= 0 && index < heap.count else { return nil }
@@ -186,9 +187,9 @@ extension PriorityQueue {
    Replace a value at a given position with a new one. This involves removing the value at the given index and then pushing the new
    value onto heap -- not an optimal operation.
 
-   - parameter index: the index of the item to replace.
-   - parameter value: the new value to store.
-   - returns: the previous item at the given index.
+   - Parameter index: the index of the item to replace.
+   - Parameter value: the new value to store.
+   - Returns: the previous item at the given index.
    */
   @inlinable
   public mutating func replace(at index: Int, with value: T) -> ElementType? {
@@ -200,8 +201,8 @@ extension PriorityQueue {
   /**
    Replace the root with a new value.
 
-   - parameter value: new value to use.
-   - returns: old root value.
+   - Parameter value: new value to use.
+   - Returns: old root value.
    */
   @inlinable
   public mutating func replace(_ value: ElementType) -> ElementType? {
@@ -213,7 +214,7 @@ extension PriorityQueue {
 
   /**
    Allow destructive iteration over the queue, handing the next ordered element the queue to the given closure.
-   - parameter block: the closure to call to process the element.
+   - Parameter block: the closure to call to process the element.
    */
   @inlinable
   public mutating func forEach(block: (ElementType) -> Void) {
@@ -225,7 +226,7 @@ extension PriorityQueue {
   /**
    Obtain all of the elements from the container in ordered fashion, resulting in an empty queue.
 
-   - returns: array of elements from the queue.
+   - Returns: array of elements from the queue.
    */
   @inlinable
   public mutating func popAll() -> [ElementType] {
@@ -258,7 +259,7 @@ extension PriorityQueue {
   /**
    Move an item "higher" (closer to the start) in the queue while it is unordered compared to its parent.
 
-   - parameter index: the index of the item to compare.
+   - Parameter index: the index of the item to compare.
    */
   @inlinable
   mutating func siftUp(at index: Index) {
@@ -279,8 +280,8 @@ extension PriorityQueue {
   /**
    Move an item down (closer to the end) in the queue while it is unordered compared to its children.
 
-   - parameter index: the index of the item to compare.
-   - parameter until: the index at which to stop the comparisons.
+   - Parameter index: the index of the item to compare.
+   - Parameter until: the index at which to stop the comparisons.
    */
   @inlinable
   mutating func siftDown(at index: Index, until: Index) {
@@ -306,8 +307,8 @@ extension PriorityQueue where ElementType: Equatable {
   /**
    Determine if container holds the given value. Note that this is not optimized -- it runs in O(n).
 
-   - parameter value: the value to look for.
-   - returns: true if found.
+   - Parameter value: the value to look for.
+   - Returns: true if found.
    */
   @inlinable
   public func contains(_ value: ElementType) -> Bool { heap.contains(value) }
@@ -316,19 +317,21 @@ extension PriorityQueue where ElementType: Equatable {
 extension PriorityQueue where ElementType: Comparable {
 
   /**
-   Factory method for creating a PriorityQueue with max-value ordering.
+   Factory method for creating a PriorityQueue with max-value ordering. This is equivalent to calling
+   ``PriorityQueue/init(compare:values:)`` with the `>` operator.
 
-   - parameter args: values to add to the queue.
-   - returns: the new PriorityQueue instance.
+   - Parameter args: values to add to the queue.
+   - Returns: the new PriorityQueue instance.
    */
   @inlinable
   static public func maxOrdering(_ args: ElementType...) -> PriorityQueue { PriorityQueue(compare: >, values: args) }
 
   /**
-   Factory method for creating a PriorityQueue with min-value ordering.
+   Factory method for creating a PriorityQueue with min-value ordering. This is equivalent to calling
+   ``PriorityQueue/init(compare:values:)`` with the `<` operator.
 
-   - parameter args: values to add to the queue.
-   - returns: the new PriorityQueue instance.
+   - Parameter args: values to add to the queue.
+   - Returns: the new PriorityQueue instance.
    */
   @inlinable
   static public func minOrdering(_ args: ElementType...) -> PriorityQueue { PriorityQueue(compare: <, values: args) }
@@ -336,7 +339,7 @@ extension PriorityQueue where ElementType: Comparable {
   /**
    Convenience constructor for a PriorityQueue with min-value ordering.
 
-   - parameter args: initial values to add to the queue.
+   - Parameter args: initial values to add to the queue.
    */
   @inlinable
   public init(_ args: ElementType...) {

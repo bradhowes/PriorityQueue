@@ -1,0 +1,399 @@
+{
+  "abstract" : [
+    {
+      "text" : "Remove the item at the given index. This involves both a sift down of the new value at ",
+      "type" : "text"
+    },
+    {
+      "code" : "index",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " as well as a sift up in order to",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "guarantee heap constraints – not an optimal operation.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/PriorityQueue\/documentation\/PriorityQueue",
+        "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue\/remove(at:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "PriorityQueue",
+    "externalID" : "s:13PriorityQueueAAV6remove2atxSgSi_tF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "remove"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "at"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Si",
+        "text" : "Int"
+      },
+      {
+        "kind" : "text",
+        "text" : ") -> "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:13PriorityQueueAAV",
+        "text" : "PriorityQueue"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "T"
+      },
+      {
+        "kind" : "text",
+        "text" : ">."
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "ElementType"
+      },
+      {
+        "kind" : "text",
+        "text" : "?"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "PriorityQueue"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "remove(at:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "mutating"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "remove"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "at"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "index"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Si",
+              "text" : "Int"
+            },
+            {
+              "kind" : "text",
+              "text" : ") -> "
+            },
+            {
+              "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:13PriorityQueueAAV",
+              "text" : "PriorityQueue"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "T"
+            },
+            {
+              "kind" : "text",
+              "text" : ">."
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "ElementType"
+            },
+            {
+              "kind" : "text",
+              "text" : "?"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The position to remove.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "index"
+        }
+      ]
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "return-value",
+          "level" : 2,
+          "text" : "Return Value",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The item that was at the given position.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/priorityqueue\/priorityqueue\/remove(at:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://PriorityQueue/documentation/PriorityQueue": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "PriorityQueue",
+  "type" : "topic",
+  "url" : "\/documentation\/priorityqueue"
+},
+"doc://PriorityQueue/documentation/PriorityQueue/PriorityQueue": {
+  "abstract" : [
+    {
+      "text" : "Generic container that maintains a binary heap for fast access to a min or max element in the container.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PriorityQueue"
+    }
+  ],
+  "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PriorityQueue"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PriorityQueue",
+  "type" : "topic",
+  "url" : "\/documentation\/priorityqueue\/priorityqueue"
+},
+"doc://PriorityQueue/documentation/PriorityQueue/PriorityQueue/remove(at:)": {
+  "abstract" : [
+    {
+      "text" : "Remove the item at the given index. This involves both a sift down of the new value at ",
+      "type" : "text"
+    },
+    {
+      "code" : "index",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " as well as a sift up in order to",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "guarantee heap constraints – not an optimal operation.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "remove"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "at"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Si",
+      "text" : "Int"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:13PriorityQueueAAV",
+      "text" : "PriorityQueue"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "ElementType"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue\/remove(at:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "remove(at:)",
+  "type" : "topic",
+  "url" : "\/documentation\/priorityqueue\/priorityqueue\/remove(at:)"
+}
+}
+}

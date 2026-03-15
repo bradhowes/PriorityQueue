@@ -1,0 +1,435 @@
+{
+  "abstract" : [
+    {
+      "text" : "Initialize new instance with a collection of items.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/PriorityQueue\/documentation\/PriorityQueue",
+        "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue\/init(compare:values:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:13PriorityQueueAAV7compare6valuesAByxGSbx_xtc_SayxGtcfc",
+    "fragments" : [
+      {
+        "kind" : "identifier",
+        "text" : "init"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "compare"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:13PriorityQueueAAV",
+        "text" : "PriorityQueue"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "T"
+      },
+      {
+        "kind" : "text",
+        "text" : ">."
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:13PriorityQueueAAV10OrderingOpa",
+        "text" : "OrderingOp"
+      },
+      {
+        "kind" : "text",
+        "text" : ", "
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "values"
+      },
+      {
+        "kind" : "text",
+        "text" : ": ["
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:13PriorityQueueAAV",
+        "text" : "PriorityQueue"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "T"
+      },
+      {
+        "kind" : "text",
+        "text" : ">."
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "ElementType"
+      },
+      {
+        "kind" : "text",
+        "text" : "])"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "PriorityQueue"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Initializer",
+    "symbolKind" : "init",
+    "title" : "init(compare:values:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "init"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "compare"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "attribute",
+              "text" : "@escaping "
+            },
+            {
+              "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:13PriorityQueueAAV",
+              "text" : "PriorityQueue"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "T"
+            },
+            {
+              "kind" : "text",
+              "text" : ">."
+            },
+            {
+              "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue\/OrderingOp",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:13PriorityQueueAAV10OrderingOpa",
+              "text" : "OrderingOp"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "values"
+            },
+            {
+              "kind" : "text",
+              "text" : ": ["
+            },
+            {
+              "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:13PriorityQueueAAV",
+              "text" : "PriorityQueue"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "T"
+            },
+            {
+              "kind" : "text",
+              "text" : ">."
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "ElementType"
+            },
+            {
+              "kind" : "text",
+              "text" : "])"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "kind" : "parameters",
+      "parameters" : [
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Function that determines the ordering of items in the queue.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "compare"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Collection of items to add.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "values"
+        }
+      ]
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/priorityqueue\/priorityqueue\/init(compare:values:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://PriorityQueue/documentation/PriorityQueue": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "PriorityQueue",
+  "type" : "topic",
+  "url" : "\/documentation\/priorityqueue"
+},
+"doc://PriorityQueue/documentation/PriorityQueue/PriorityQueue": {
+  "abstract" : [
+    {
+      "text" : "Generic container that maintains a binary heap for fast access to a min or max element in the container.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PriorityQueue"
+    }
+  ],
+  "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PriorityQueue"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PriorityQueue",
+  "type" : "topic",
+  "url" : "\/documentation\/priorityqueue\/priorityqueue"
+},
+"doc://PriorityQueue/documentation/PriorityQueue/PriorityQueue/OrderingOp": {
+  "abstract" : [
+    {
+      "text" : "Defines a function type that returns true if the two arguments are considered in order.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "typealias"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "OrderingOp"
+    }
+  ],
+  "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue\/OrderingOp",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "OrderingOp"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PriorityQueue.OrderingOp",
+  "type" : "topic",
+  "url" : "\/documentation\/priorityqueue\/priorityqueue\/orderingop"
+},
+"doc://PriorityQueue/documentation/PriorityQueue/PriorityQueue/init(compare:values:)": {
+  "abstract" : [
+    {
+      "text" : "Initialize new instance with a collection of items.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "compare"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:13PriorityQueueAAV",
+      "text" : "PriorityQueue"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:13PriorityQueueAAV10OrderingOpa",
+      "text" : "OrderingOp"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "values"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:13PriorityQueueAAV",
+      "text" : "PriorityQueue"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "ElementType"
+    },
+    {
+      "kind" : "text",
+      "text" : "])"
+    }
+  ],
+  "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue\/init(compare:values:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(compare:values:)",
+  "type" : "topic",
+  "url" : "\/documentation\/priorityqueue\/priorityqueue\/init(compare:values:)"
+}
+}
+}

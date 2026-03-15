@@ -1,0 +1,193 @@
+{
+  "abstract" : [
+    {
+      "text" : "Remove all entries from the queue.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/PriorityQueue\/documentation\/PriorityQueue",
+        "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue\/removeAll()"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "PriorityQueue",
+    "externalID" : "s:13PriorityQueueAAV9removeAllyyF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "func"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "removeAll"
+      },
+      {
+        "kind" : "text",
+        "text" : "()"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "PriorityQueue"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "removeAll()"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "mutating"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "func"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "removeAll"
+            },
+            {
+              "kind" : "text",
+              "text" : "()"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/priorityqueue\/priorityqueue\/removeall()"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://PriorityQueue/documentation/PriorityQueue": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "PriorityQueue",
+  "type" : "topic",
+  "url" : "\/documentation\/priorityqueue"
+},
+"doc://PriorityQueue/documentation/PriorityQueue/PriorityQueue": {
+  "abstract" : [
+    {
+      "text" : "Generic container that maintains a binary heap for fast access to a min or max element in the container.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PriorityQueue"
+    }
+  ],
+  "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PriorityQueue"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "PriorityQueue",
+  "type" : "topic",
+  "url" : "\/documentation\/priorityqueue\/priorityqueue"
+},
+"doc://PriorityQueue/documentation/PriorityQueue/PriorityQueue/removeAll()": {
+  "abstract" : [
+    {
+      "text" : "Remove all entries from the queue.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "removeAll"
+    },
+    {
+      "kind" : "text",
+      "text" : "()"
+    }
+  ],
+  "identifier" : "doc:\/\/PriorityQueue\/documentation\/PriorityQueue\/PriorityQueue\/removeAll()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "removeAll()",
+  "type" : "topic",
+  "url" : "\/documentation\/priorityqueue\/priorityqueue\/removeall()"
+}
+}
+}
