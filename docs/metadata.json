@@ -1,9 +1,0 @@
-{
-  "bundleDisplayName" : "PriorityQueue",
-  "bundleID" : "PriorityQueue",
-  "schemaVersion" : {
-    "major" : 0,
-    "minor" : 1,
-    "patch" : 0
-  }
-}

@@ -13,6 +13,7 @@ docc:
 		generate-documentation \
 		--target $(SCHEME) \
 		--transform-for-static-hosting \
+		--analyze \
 		--output-path $(DOCC_DIR)
 
 clean:

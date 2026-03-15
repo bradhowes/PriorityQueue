@@ -3,13 +3,6 @@
 /**
  Generic container that maintains a binary heap for fast access to a min or max element in the container.
 
- In a heap, elements are ordered sequentially, with parents appearing before their children. All parents but the last
- have 2 children (the last parent may contain 1 child). Ordering is determined by a function given during
- initialization.
-
-> Note: Apple's swift-collections package contains a min-max heap implementation that may be better to use. I have not
-> measured and compared performance of either.
-
  Creating a new heap is straightforward:
 
  ```
@@ -66,6 +59,15 @@
  ```
 
  Both of these are destructive operations, leaving the queue empty.
+
+ Finally, there is a way to see the queue as an array of values by accessing the ``PriorityQueue.unordered`` property:
+
+ ```
+ heap.push(2, 3, 1, 4)
+ heap.unordered # -> [1, 3, 2, 4]
+ ```
+
+ Just remember that the positions of the elements are only valid until the collection is changed.
  */
 public struct PriorityQueue<T> {
 
@@ -87,6 +89,10 @@ public struct PriorityQueue<T> {
   /// The first item in the queue, ordered by priority.
   @inlinable
   public var first: ElementType? { heap.first }
+
+  /// Obtain a representation of the queue as an array.
+  @inlinable
+  public var unordered: [ElementType] { Array(heap) }
 
   @usableFromInline
   internal let isOrdered: OrderingOp
@@ -170,12 +176,13 @@ extension PriorityQueue {
   public mutating func remove(at index: Int) -> ElementType? {
     guard index >= 0 && index < heap.count else { return nil }
     let last = heap.count - 1
-    if index != last {
+    if index == 0 {
+      return pop()
+    } else if index != last {
       heap.swapAt(index, last)
       siftDown(at: index, until: last)
       siftUp(at: index)
     }
-
     return heap.removeLast()
   }
 
@@ -199,14 +206,19 @@ extension PriorityQueue {
   }
 
   /**
-   Replace the root with a new value.
+   Replace the first (root) value with a new value while maintaining the heap property. Useful if the first element has changed a
+   property that affects is ordering. More efficient than popping off the top element and pushing a new one.
 
    - Parameter value: new value to use.
    - Returns: old root value.
    */
   @inlinable
   public mutating func replace(_ value: ElementType) -> ElementType? {
-    replace(at: 0, with: value)
+    heap.append(value)
+    let last = heap.count - 1
+    heap.swapAt(0, last)
+    siftDown(at: 0, until: heap.count - 1)
+    return heap.removeLast()
   }
 }
 
@@ -252,6 +264,38 @@ extension PriorityQueue<Any>.Index {
   /// The index of the second (right) child.
   @inlinable
   var rightChildPos: Self { leftChildPos &+ 1 }
+}
+
+extension PriorityQueue {
+
+  /// Error raised if the heap property does not hold.
+  public struct ValidationFailure: Error {}
+
+  /**
+   Validate that heap (ordering) property of the internal container still holds.
+
+   - throws ``ValidationFailure``
+   */
+  public func validateHeapProperty() throws {
+    guard !heap.isEmpty else { return }
+
+    func validateParent(_ index: Int) throws {
+
+      let left = index.leftChildPos
+      if left < heap.count {
+        guard !isOrdered(heap[left], heap[index]) else { throw ValidationFailure() }
+        try validateParent(left)
+      }
+
+      let right = index.rightChildPos
+      if right < heap.count {
+        guard !isOrdered(heap[right], heap[index]) else { throw ValidationFailure() }
+        try validateParent(right)
+      }
+    }
+
+    try validateParent(0)
+  }
 }
 
 extension PriorityQueue {
