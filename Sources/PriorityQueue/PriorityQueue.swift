@@ -60,7 +60,7 @@
 
  Both of these are destructive operations, leaving the queue empty.
 
- Finally, there is a way to see the queue as an array of values by accessing the ``PriorityQueue.unordered`` property:
+ Finally, there is a way to see the queue as an array of values by accessing the ``PriorityQueue/unordered`` property:
 
  ```
  heap.push(2, 3, 1, 4)
@@ -90,7 +90,8 @@ public struct PriorityQueue<T> {
   @inlinable
   public var first: ElementType? { heap.first }
 
-  /// Obtain a representation of the queue as an array.
+  /// Obtain a representation of the queue as an array. Operations on this array will not affect the queue. Also, the representation
+  /// is only valid until the next change to the priority queue.
   @inlinable
   public var unordered: [ElementType] { Array(heap) }
 
