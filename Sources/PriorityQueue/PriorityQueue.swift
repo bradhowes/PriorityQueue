@@ -6,7 +6,7 @@
  Creating a new heap is straightforward:
 
  ```
- var heap: PriorityQueue<Int> = .init(ordering: \<)
+ var heap: PriorityQueue<Int> = .init(ordering: <)
  ```
 
  Since `Int` conforms to the `Orderable` protocol, one can omit the `ordering:` argument if a min-heap of integers is desired:
@@ -15,7 +15,7 @@
  var heap: PriorityQueue<Int> = .init()
  ```
 
- For a max heap, one must provide `\>` operator or use the ``PriorityQueue/maxOrdering(_:)`` factory function.
+ For a max heap, one must provide `>` operator or use the ``PriorityQueue/maxOrdering(_:)`` factory function.
 
  To add values to a heap, call the ``PriorityQueue/push(_:)`` method. This method supports a variable number of values
  (there is the ``PriorityQueue/push(items:)`` variant for a sequence):

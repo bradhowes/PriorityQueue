@@ -1,11 +1,13 @@
 # ``PriorityQueue``
 
-A priority queue is specialized container of typed elements that provides fast (O(1)) access to the minimum or maximum value held
-in the container. Further, it guarantees that this will be the case even after elements are added and/or removed.
+A priority queue is a specialized container of typed elements that provides fast (O(1)) access to the minimum or maximum
+value held in the container. Further, it guarantees that this will be the case even after elements are added and/or
+removed.
 
 ## Overview
 
-A heap data structure is a tree that satisfies the _heap property_:
+This priority queue utilizes a heap data structure to order its elements. It is a tree that satisfies the _heap
+property_:
 
 > Heap Property: For any node C, if P is the parent node of C, then P will be ordered before C according to some
 > ordering operation. All parents have at most 2 children, and the root node has no parent.
