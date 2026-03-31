@@ -13,3 +13,8 @@ jobs:
       run: swift build
     - name: Test
       run: swift test
+    - uses: cirruslabs/swiftlint-action@v1
+      with:
+        version: latest
+      run: swiftlint
+

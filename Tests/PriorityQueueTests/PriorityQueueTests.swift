@@ -15,26 +15,26 @@ struct PriorityQueueTests {
     #expect(!queue.isEmpty)
 
     #expect(queue.first == 1)
-    #expect(queue.pop()! == 1)
+    #expect(queue.pop() == 1)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 2)
+    #expect(queue.pop() == 2)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 3)
+    #expect(queue.pop() == 3)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 4)
+    #expect(queue.pop() == 4)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 5)
+    #expect(queue.pop() == 5)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 5)
+    #expect(queue.pop() == 5)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 6)
+    #expect(queue.pop() == 6)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 8)
+    #expect(queue.pop() == 8)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 9)
+    #expect(queue.pop() == 9)
     try queue.validateHeapProperty()
 
-    #expect(queue.count == 0)
+    #expect(queue.isEmpty)
     #expect(queue.pop() == nil)
     #expect(queue.first == nil)
     #expect(queue.isEmpty)
@@ -44,25 +44,25 @@ struct PriorityQueueTests {
   func maxQueue() throws {
     var queue = PriorityQueue(compare: >, 1, 3, 5, 7, 9, 2, 4, 6, 8)
     #expect(queue.count == 9)
-    #expect(queue.pop()! == 9)
+    #expect(queue.pop() == 9)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 8)
+    #expect(queue.pop() == 8)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 7)
+    #expect(queue.pop() == 7)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 6)
+    #expect(queue.pop() == 6)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 5)
+    #expect(queue.pop() == 5)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 4)
+    #expect(queue.pop() == 4)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 3)
+    #expect(queue.pop() == 3)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 2)
+    #expect(queue.pop() == 2)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 1)
+    #expect(queue.pop() == 1)
     try queue.validateHeapProperty()
-    #expect(queue.count == 0)
+    #expect(queue.isEmpty)
     #expect(queue.pop() == nil)
   }
 
@@ -73,18 +73,18 @@ struct PriorityQueueTests {
     queue.push(2)
     try queue.validateHeapProperty()
     #expect(queue.count == 6)
-    #expect(queue.pop()! == 1)
+    #expect(queue.pop() == 1)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 2)
+    #expect(queue.pop() == 2)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 3)
+    #expect(queue.pop() == 3)
     try queue.validateHeapProperty()
 
     queue.push(1)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 1)
+    #expect(queue.pop() == 1)
     try queue.validateHeapProperty()
-    #expect(queue.pop()! == 5)
+    #expect(queue.pop() == 5)
     try queue.validateHeapProperty()
   }
 
@@ -94,7 +94,7 @@ struct PriorityQueueTests {
     try queue.validateHeapProperty()
     #expect(queue.count == 5)
     queue.removeAll()
-    #expect(queue.count == 0)
+    #expect(queue.isEmpty)
   }
 
   @Test
@@ -115,7 +115,7 @@ struct PriorityQueueTests {
       counter += 1
     }
 
-    #expect(queue.count == 0)
+    #expect(queue.isEmpty)
   }
 
   @Test
@@ -135,7 +135,7 @@ struct PriorityQueueTests {
     try queue.validateHeapProperty()
     #expect(queue.pop() == 9)
     try queue.validateHeapProperty()
-    #expect(queue.count == 0)
+    #expect(queue.isEmpty)
   }
 
   @Test
@@ -155,11 +155,11 @@ struct PriorityQueueTests {
     try queue.validateHeapProperty()
     #expect(queue.pop() == 1)
     try queue.validateHeapProperty()
-    #expect(queue.count == 0)
+    #expect(queue.isEmpty)
   }
 
   @Test
-  func remove() throws  {
+  func remove() throws {
     var queue = PriorityQueue.maxOrdering(1, 2, 2, 3, 3, 8, 7, 5, 2, 9)
     #expect(queue.count == 10)
     try queue.validateHeapProperty()
@@ -187,7 +187,7 @@ struct PriorityQueueTests {
 
     var remaining: [Int] = []
     queue.forEach { remaining.append($0) }
-    #expect(remaining == [2,2,3,3,3,5,6,7,8,9])
+    #expect(remaining == [2, 2, 3, 3, 3, 5, 6, 7, 8, 9])
   }
 
   @Test
