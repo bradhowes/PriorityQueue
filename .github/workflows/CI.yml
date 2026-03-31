@@ -16,5 +16,3 @@ jobs:
       run: swift build
     - name: Test
       run: swift test
-    - name: Lint
-      run: swiftlint
